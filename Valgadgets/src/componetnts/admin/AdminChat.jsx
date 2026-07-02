@@ -200,7 +200,7 @@ export default function AdminChat({ open, onClose }) {
           </button>
         </div>
         {/* Mobile Header */}
-        
+
         <div className='lg:hidden h-14 border-b bg-[#2F4832] text-white flex items-center justify-between px-4'>
           {/* Left */}
           <div className='w-10 flex justify-start'>
@@ -238,7 +238,7 @@ export default function AdminChat({ open, onClose }) {
               lg:w-[320px]
               xl:w-[340px]
 
-              ${showCustomers ? 'flex' : 'hidden'}
+              ${showCustomers ? 'flex' : 'hidden lg:flex'}
             `}>
             {/* SEARCH */}
 
@@ -335,7 +335,7 @@ export default function AdminChat({ open, onClose }) {
               flex-col
               bg-gray-100
               min-h-0
-              ${showCustomers ? 'hidden' : 'flex'}
+              ${showCustomers ? 'hidden lg:flex' : 'flex'}
             `}>
             {/* ================= MESSAGES ================= */}
 
