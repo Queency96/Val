@@ -242,7 +242,7 @@ export default function AdminChat({ open, onClose }) {
             `}>
             {/* SEARCH */}
 
-            <div className='p-2 border-b w-full bg-red-600'>
+            <div className='p-2 border-b w-full'>
               <div className='relative'>
                 <Search
                   size={18}
