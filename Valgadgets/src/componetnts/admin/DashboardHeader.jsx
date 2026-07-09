@@ -19,7 +19,7 @@ export default function DashboardHeader({
   }, []);
 
   return (
-    <header className='hidden  md:flex md:justify-end lg:items-between lg:gap-4 lg:sticky top-0 z-50 border-b shadow-sm'>
+    <header className='hidden  md:flex md:justify-end lg:items-between lg:gap-4 lg:sticky top-0 z-50 border-b shadow-sm bg-white'>
       <div className='max-w-7xl mx-3 px-6 h-20 flex items-center justify-between'>
         {/* SEARCH */}
         <div className='hidden lg:flex justify-start items-center w-[420px] relative me-8'>

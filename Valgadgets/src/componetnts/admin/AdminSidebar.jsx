@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
+import Logo from '../../assets/ValGadgets_Logo.png';
 import {
   LayoutDashboard,
   ShoppingBag,
@@ -95,8 +96,12 @@ export default function AdminSidebar({ children }) {
 
         <div className='h-16 border-b border-white/10 flex items-center justify-between px-5'>
           <div className='flex items-center gap-4'>
-            <div className='w-12 h-12 rounded-2xl bg-[#2F4832] flex items-center justify-center text-white'>
-              <ShoppingBag size={24} />
+            <div className='w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-white'>
+              <img
+                src={Logo}
+                alt='ValGadgets Logo'
+                className='w-28 hover:opacity-80 transition'
+              />
             </div>
 
             <div>
