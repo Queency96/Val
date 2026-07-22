@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { MessageCircle, X } from 'lucide-react';
-import DashboardHeader from './DashboardHeader';
-import AdminSidebar from './AdminSidebar';
+// import { MessageCircle, X } from 'lucide-react';
+// import DashboardHeader from './DashboardHeader';
+// import AdminSidebar from './AdminSidebar';
 import AnalyticsCards from './AnalyticsCards';
 import RevenueChart from './RevenueChart';
 import SalesChart from './SalesChart';
@@ -9,7 +9,7 @@ import OrdersTable from './OrdersTable';
 import OrderDrawer from './OrderDrawer';
 import NotificationPanel from './NotificationPanel';
 import RecentActivity from './RecentActivity';
-import AdminChat from './AdminChat';
+// import AdminChat from './AdminChat';
 import QuickActions from './QuickActions';
 import TopProducts from './TopProducts';
 import CustomerAnalytics from './CustomerAnalytics';
@@ -25,7 +25,7 @@ export default function AdminDashboard() {
   const [darkMode, setDarkMode] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
 
-  const [chatOpen, setChatOpen] = useState(false);
+  // const [chatOpen, setChatOpen] = useState(false);
 
   const [loading, setLoading] = useState(true);
 
@@ -243,198 +243,150 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className='min-h-screen bg-gray-100'>
+    <div className='max-w-7xl mx-auto p-6 space-y-6'>
       {/* ===========================================
-          SIDEBAR + MAIN CONTENT
+          ANALYTICS CARDS
       ============================================ */}
+      <AnalyticsCards
+        totalRevenue={totalRevenue}
+        totalOrders={totalOrders}
+        totalCustomers={totalCustomers}
+        pendingOrders={pendingOrders}
+        paidOrders={paidOrders}
+        deliveredOrders={deliveredOrders}
+        cancelledOrders={cancelledOrders}
+      />
 
-      <AdminSidebar>
-        {/* ===========================================
-          HEADER
+      {/* ===========================================
+          CHARTS
       ============================================ */}
+      <div className='grid grid-cols-1 xl:grid-cols-3 gap-6'>
+        {/* LEFT */}
+        <div className='xl:col-span-2 space-y-6'>
+          <RevenueChart revenue={totalRevenue} orders={orders} />
 
-        <DashboardHeader
-          notifications={notifications}
-          search={search}
-          setSearch={setSearch}
-          onOpenNotifications={() => setOpenNotifications(true)}
-          darkMode={darkMode}
-          toggleDarkMode={toggleDarkMode}
-        />
+          <SalesChart orders={orders} />
+        </div>
 
-        <main className='max-w-7xl mx-auto p-6 space-y-6'>
-          {/* ===========================================
-              ANALYTICS CARDS
-          ============================================ */}
+        {/* RIGHT */}
+        <div className='space-y-6'>
+          <NotificationPanel
+            open={openNotifications}
+            notifications={notifications}
+            onClose={() => setOpenNotifications(false)}
+            onClearAll={clearNotifications}
+            onRemove={removeNotification}
+            onMarkAsRead={markAsRead}
+          />
 
-          <AnalyticsCards
-            totalRevenue={totalRevenue}
+          <QuickActions
             totalOrders={totalOrders}
-            totalCustomers={totalCustomers}
-            pendingOrders={pendingOrders}
-            paidOrders={paidOrders}
-            deliveredOrders={deliveredOrders}
-            cancelledOrders={cancelledOrders}
+            pending={pendingOrders}
+            delivered={deliveredOrders}
           />
+        </div>
+      </div>
 
-          {/* ===========================================
-              CHARTS
-          ============================================ */}
+      {/* ===========================================
+          SECOND ROW
+      ============================================ */}
+      <div className='grid grid-cols-1 xl:grid-cols-3 gap-6'>
+        {/* CUSTOMER ANALYTICS */}
 
-          <div className='grid grid-cols-1 xl:grid-cols-3 gap-6'>
-            {/* LEFT */}
-            <div className='xl:col-span-2 space-y-6'>
-              <RevenueChart revenue={totalRevenue} orders={orders} />
+        <div className='xl:col-span-2'>
+          <CustomerAnalytics orders={orders} />
+        </div>
 
-              <SalesChart orders={orders} />
-            </div>
+        {/* TOP PRODUCTS */}
 
-            {/* RIGHT */}
-            <div className='space-y-6'>
-              <NotificationPanel
-                open={openNotifications}
-                notifications={notifications}
-                onClose={() => setOpenNotifications(false)}
-                onClearAll={clearNotifications}
-                onRemove={removeNotification}
-                onMarkAsRead={markAsRead}
-              />
+        <TopProducts products={bestSelling} />
+      </div>
 
-              <QuickActions
-                totalOrders={totalOrders}
-                pending={pendingOrders}
-                delivered={deliveredOrders}
-              />
-            </div>
+      {/* ===========================================
+          RECENT ACTIVITY
+      ============================================ */}
+      <RecentActivity
+        orders={orders}
+        messages={messages}
+        lowStockProducts={[]}
+      />
+
+      {/* ===========================================
+          ORDERS SECTION HEADER
+       ============================================ */}
+
+      <div className='bg-white rounded-3xl shadow-sm'>
+        <div className='flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 p-6 border-b'>
+          <div>
+            <h2 className='text-2xl font-bold'>Orders Management</h2>
+
+            <p className='text-gray-500 mt-1'>
+              Manage all customer orders from one place.
+            </p>
           </div>
 
-          {/* ===========================================
-              SECOND ROW
-          ============================================ */}
+          <div className='flex flex-wrap gap-3'>
+            {/* STATUS */}
 
-          <div className='grid grid-cols-1 xl:grid-cols-3 gap-6'>
-            {/* CUSTOMER ANALYTICS */}
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className='border rounded-xl px-4 py-2'>
+              <option value='all'>All Orders</option>
 
-            <div className='xl:col-span-2'>
-              <CustomerAnalytics orders={orders} />
-            </div>
+              <option value='pending'>Pending</option>
 
-            {/* TOP PRODUCTS */}
+              <option value='processing'>Processing</option>
 
-            <TopProducts products={bestSelling} />
+              <option value='paid'>Paid</option>
+
+              <option value='shipped'>Shipped</option>
+
+              <option value='delivered'>Delivered</option>
+
+              <option value='cancelled'>Cancelled</option>
+            </select>
+
+            {/* DATE */}
+
+            <select
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+              className='border rounded-xl px-4 py-2'>
+              <option value='all'>All Dates</option>
+
+              <option value='today'>Today</option>
+
+              <option value='week'>Last 7 Days</option>
+
+              <option value='month'>This Month</option>
+            </select>
           </div>
+        </div>
 
-          {/* ===========================================
-              RECENT ACTIVITY
-          ============================================ */}
+        {/* ===========================================
+            ORDERS TABLE
+         ============================================ */}
 
-          <RecentActivity
-            orders={orders}
-            messages={messages}
-            lowStockProducts={[]}
-          />
+        <OrdersTable
+          loading={loading}
+          orders={filteredOrders}
+          onView={(order) => setSelectedOrder(order)}
+          onDelete={deleteOrder}
+          onStatusChange={updateStatus}
+        />
+      </div>
 
-          {/* ===========================================
-              ORDERS SECTION HEADER
-          ============================================ */}
-
-          <div className='bg-white rounded-3xl shadow-sm'>
-            <div className='flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 p-6 border-b'>
-              <div>
-                <h2 className='text-2xl font-bold'>Orders Management</h2>
-
-                <p className='text-gray-500 mt-1'>
-                  Manage all customer orders from one place.
-                </p>
-              </div>
-
-              <div className='flex flex-wrap gap-3'>
-                {/* STATUS */}
-
-                <select
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                  className='border rounded-xl px-4 py-2'>
-                  <option value='all'>All Orders</option>
-
-                  <option value='pending'>Pending</option>
-
-                  <option value='processing'>Processing</option>
-
-                  <option value='paid'>Paid</option>
-
-                  <option value='shipped'>Shipped</option>
-
-                  <option value='delivered'>Delivered</option>
-
-                  <option value='cancelled'>Cancelled</option>
-                </select>
-
-                {/* DATE */}
-
-                <select
-                  value={dateFilter}
-                  onChange={(e) => setDateFilter(e.target.value)}
-                  className='border rounded-xl px-4 py-2'>
-                  <option value='all'>All Dates</option>
-
-                  <option value='today'>Today</option>
-
-                  <option value='week'>Last 7 Days</option>
-
-                  <option value='month'>This Month</option>
-                </select>
-              </div>
-            </div>
-
-            {/* ===========================================
-                ORDERS TABLE
-            ============================================ */}
-
-            <OrdersTable
-              loading={loading}
-              orders={filteredOrders}
-              onView={(order) => setSelectedOrder(order)}
-              onDelete={deleteOrder}
-              onStatusChange={updateStatus}
-            />
-          </div>
-
-          {/* ===========================================
-              ADMIN CHAT
-          ============================================ */}
-          <>
-            {/* Floating Chat Button */}
-            <button
-              onClick={() => setChatOpen(!chatOpen)}
-              className='fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-[#2F4832] hover:bg-[#243928] text-white shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110'>
-              {chatOpen ? <X size={28} /> : <MessageCircle size={28} />}
-            </button>
-
-            {/* Chat Modal */}
-            <AdminChat
-              open={chatOpen}
-              onClose={() => setChatOpen(false)}
-              messages={messages}
-              setMessages={setMessages}
-            />
-          </>
-
-          {/* <AdminChat messages={messages} setMessages={setMessages} /> */}
-
-          {/* ===========================================
-              ORDER DRAWER
-          ============================================ */}
-
-          {selectedOrder && (
-            <OrderDrawer
-              order={selectedOrder}
-              close={() => setSelectedOrder(null)}
-              updateStatus={updateStatus}
-            />
-          )}
-        </main>
-      </AdminSidebar>
+      {/* ===========================================
+           ORDER DRAWER
+       ============================================ */}
+      {selectedOrder && (
+        <OrderDrawer
+          order={selectedOrder}
+          close={() => setSelectedOrder(null)}
+          updateStatus={updateStatus}
+        />
+      )}
     </div>
   );
 }

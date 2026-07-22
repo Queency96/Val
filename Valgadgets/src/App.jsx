@@ -1,6 +1,16 @@
 import { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-
+import AdminLayout from './componetnts/admin/layout/AdminLayout';
+import ProtectedRoute from './componetnts/admin/components/ProtectedRoute';
+import AdminDashboard from './componetnts/admin/components/AdminDashboard';
+import AdminLogin from './componetnts/admin/components/AdminLogin';
+import AdminProduct from './componetnts/admin/components/Products';
+import AdminProductCreate from './componetnts/admin/components/AdminProductCreate';
+import QuickViewModal from './componetnts/ui/QuickViewModal';
+import { WishlistProvider } from './context/WishlistContext';
+import { CartProvider } from './context/CartContext';
+import { AuthProvider } from './context/AuthContext';
+import { CheckoutProvider } from './context/CheckoutContext';
 import Home from './componetnts/pages/Home';
 import Wishlist from './componetnts/pages/Wishlist';
 import SearchPage from './componetnts/pages/SearchPage';
@@ -11,23 +21,10 @@ import Checkout from './componetnts/pages/Checkout';
 import CategoryPage from './componetnts/pages/CategoryPage';
 import BrandProducts from './componetnts/pages/BrandProducts';
 import OrderSuccess from './componetnts/pages/OrderSuccess';
-
 import Header from './componetnts/layouts/Header';
 import Footer from './componetnts/layouts/Footer';
 import MobileBottomNav from './componetnts/layouts/MobileBottomNav';
-
-import QuickViewModal from './componetnts/ui/QuickViewModal';
 import StickyCheckoutBar from './componetnts/sections/StickyCheckoutBar';
-
-import AdminDashboard from './componetnts/admin/AdminDashboard';
-import AdminLogin from './componetnts/admin/AdminLogin';
-import ProtectedRoute from './componetnts/admin/ProtectedRoute';
-import AdminProductCreate from './componetnts/admin/AdminProductCreate';
-
-import { WishlistProvider } from './context/WishlistContext';
-import { CartProvider } from './context/CartContext';
-import { AuthProvider } from './context/AuthContext';
-import { CheckoutProvider } from './context/CheckoutContext';
 
 function App() {
   const location = useLocation();
@@ -43,15 +40,12 @@ function App() {
   const closeModal = () => {
     setSelectedProduct(null);
   };
-
   return (
     <AuthProvider>
       <CheckoutProvider>
         <WishlistProvider>
           <CartProvider>
-            <div
-              className='min-h-screen flex flex-col'
-              style={{ background: '#969696' }}>
+            <div className='min-h-screen flex flex-col bg-[#969696]"'>
               {!isAdminPage && <Header />}
 
               {selectedProduct && (
@@ -61,69 +55,72 @@ function App() {
                 />
               )}
 
-              <main className='flex-1'>
-                <Routes>
-                  {/* PUBLIC ROUTES */}
-                  <Route
-                    path='/'
-                    element={<Home onQuickView={handleQuickView} />}
-                  />
+              <Routes>
+                {/* PUBLIC ROUTES */}
+                <Route
+                  path='/'
+                  element={<Home onQuickView={handleQuickView} />}
+                />
 
-                  <Route
-                    path='/wishlist'
-                    element={<Wishlist onQuickView={handleQuickView} />}
-                  />
+                <Route
+                  path='/wishlist'
+                  element={<Wishlist onQuickView={handleQuickView} />}
+                />
 
-                  <Route path='/search' element={<SearchPage />} />
+                <Route path='/search' element={<SearchPage />} />
 
-                  <Route path='/categories/all' element={<AllCategories />} />
+                <Route path='/categories/all' element={<AllCategories />} />
 
-                  <Route path='/brand/:brandName' element={<BrandProducts />} />
+                <Route path='/brand/:brandName' element={<BrandProducts />} />
 
-                  <Route path='/products/:id' element={<ProductDetails />} />
+                <Route path='/products/:id' element={<ProductDetails />} />
 
-                  <Route path='/cart' element={<Cart />} />
+                <Route path='/cart' element={<Cart />} />
 
-                  <Route path='/checkout' element={<Checkout />} />
+                <Route path='/checkout' element={<Checkout />} />
 
-                  <Route path='/order-success' element={<OrderSuccess />} />
+                <Route path='/order-success' element={<OrderSuccess />} />
 
-                  <Route
-                    path='/category/:category'
-                    element={<CategoryPage />}
-                  />
+                <Route path='/category/:category' element={<CategoryPage />} />
+                {/* ADMIN LOGIN */}
+                <Route path='/admin/login' element={<AdminLogin />} />
 
-                  {/* ADMIN */}
-                  <Route path='/admin/login' element={<AdminLogin />} />
+                {/* ADMIN */}
+                <Route
+                  path='/admin'
+                  element={
+                    <ProtectedRoute>
+                      <AdminLayout />
+                    </ProtectedRoute>
+                  }>
+                  <Route index element={<AdminDashboard />} />
 
-                  <Route
-                    path='/admin'
-                    element={
-                      <ProtectedRoute>
-                        <AdminDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
+                  <Route path='products' element={<AdminProduct />} />
 
-                  <Route
-                    path='/admin/product'
-                    element={
-                      <ProtectedRoute>
-                        <AdminProductCreate />
-                      </ProtectedRoute>
-                    }
-                  />
-                </Routes>
-              </main>
+                  <Route path='product' element={<AdminProductCreate />} />
 
-              {!isAdminPage && (
-                <>
-                  <StickyCheckoutBar />
-                  <MobileBottomNav />
-                  <Footer />
-                </>
-              )}
+                  {/* Future Pages */}
+                  {/* <Route path="orders" element={<Orders />} /> */}
+                  {/* <Route path="customers" element={<Customers />} /> */}
+                  {/* <Route path="analytics" element={<Analytics />} /> */}
+                  {/* <Route path="delivery" element={<Delivery />} /> */}
+                  {/* <Route path="messages" element={<Messages />} /> */}
+                  {/* <Route path="notifications" element={<Notifications />} /> */}
+                  {/* <Route path="coupons" element={<Coupons />} /> */}
+                  {/* <Route path="settings" element={<Settings />} /> */}
+                </Route>
+
+                {/* Other public routes go here */}
+              </Routes>
             </div>
+
+            {!isAdminPage && (
+              <>
+                <StickyCheckoutBar />
+                <MobileBottomNav />
+                <Footer />
+              </>
+            )}
           </CartProvider>
         </WishlistProvider>
       </CheckoutProvider>
