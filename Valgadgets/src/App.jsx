@@ -69,7 +69,10 @@ function App() {
 
                 <Route path='/search' element={<SearchPage />} />
 
-                <Route path='/categories/all' element={<AllCategories />} />
+                <Route
+                  path='/categories/all'
+                  element={<AllCategories onQuickView={handleQuickView} />}
+                />
 
                 <Route path='/brand/:brandName' element={<BrandProducts />} />
 
