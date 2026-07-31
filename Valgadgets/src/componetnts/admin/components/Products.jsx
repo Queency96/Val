@@ -287,44 +287,11 @@ export default function Products() {
 
   return (
     <div className='min-h-screen bg-gray-100'>
-      {/* {/* ===========================================
-          SIDEBAR + MAIN CONTENT
-      ============================================ */}
-
-      <AdminSidebar>
-        {/* ===========================================
-          HEADER
-      ============================================ */}
-
-        {/* <DashboardHeader
-          notifications={notifications}
-          search={search}
-          setSearch={setSearch}
-          onOpenNotifications={() => setOpenNotifications(true)}
-          darkMode={darkMode}
-          toggleDarkMode={toggleDarkMode}
-        />  */}
-
-        {/* ===========================================
-            ADMIN CHAT
-        ============================================ */}
-        <>
-          {/* Floating Chat Button */}
-          <button
-            onClick={() => setChatOpen(!chatOpen)}
-            className='fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-[#2F4832] hover:bg-[#243928] text-white shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110'>
-            {chatOpen ? <X size={28} /> : <MessageCircle size={28} />}
-          </button>
-
-          {/* Chat Modal */}
-          <AdminChat
-            open={chatOpen}
-            onClose={() => setChatOpen(false)}
-            messages={messages}
-            setMessages={setMessages}
-          />
-        </>
-
+      {/* 
+          ===========================================
+                MAIN CONTENT
+          ============================================ 
+      */}
 
         <div className='space-y-6 p-6'>
           {/* ================= PAGE HEADER ================= */}
@@ -1565,7 +1532,6 @@ export default function Products() {
             </div>
           )}
         </div>
-      </AdminSidebar>
     </div>
   );
 }

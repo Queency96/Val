@@ -25,6 +25,11 @@ import Header from './componetnts/layouts/Header';
 import Footer from './componetnts/layouts/Footer';
 import MobileBottomNav from './componetnts/layouts/MobileBottomNav';
 import StickyCheckoutBar from './componetnts/sections/StickyCheckoutBar';
+import Orders from './componetnts/admin/components/Orders';
+import Customers from './componetnts/admin/customers/Customers';
+// import Analytics from './componetnts/admin/analytics/Analytics';
+// import Ana from './componetnts/admin/analytics/ana';
+import AnalyticsStarts from './componetnts/admin/analytics/AnalysticsStarts';
 
 function App() {
   const location = useLocation();
@@ -45,7 +50,7 @@ function App() {
       <CheckoutProvider>
         <WishlistProvider>
           <CartProvider>
-            <div className='min-h-screen flex flex-col bg-[#969696]"'>
+            <div className='min-h-screen flex flex-col bg-[#969696]'>
               {!isAdminPage && <Header />}
 
               {selectedProduct && (
@@ -103,9 +108,9 @@ function App() {
                   <Route path='product' element={<AdminProductCreate />} />
 
                   {/* Future Pages */}
-                  {/* <Route path="orders" element={<Orders />} /> */}
-                  {/* <Route path="customers" element={<Customers />} /> */}
-                  {/* <Route path="analytics" element={<Analytics />} /> */}
+                  <Route path='orders' element={<Orders />} />
+                  <Route path='customers' element={<Customers />} />
+                  <Route path='analytics' element={<AnalyticsStarts />} />
                   {/* <Route path="delivery" element={<Delivery />} /> */}
                   {/* <Route path="messages" element={<Messages />} /> */}
                   {/* <Route path="notifications" element={<Notifications />} /> */}
