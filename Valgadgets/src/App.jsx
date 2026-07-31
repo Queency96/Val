@@ -30,6 +30,7 @@ import Customers from './componetnts/admin/customers/Customers';
 // import Analytics from './componetnts/admin/analytics/Analytics';
 // import Ana from './componetnts/admin/analytics/ana';
 import AnalyticsStarts from './componetnts/admin/analytics/AnalysticsStarts';
+import Delivery from './componetnts/admin/delivery/Delivery';
 
 function App() {
   const location = useLocation();
@@ -111,7 +112,7 @@ function App() {
                   <Route path='orders' element={<Orders />} />
                   <Route path='customers' element={<Customers />} />
                   <Route path='analytics' element={<AnalyticsStarts />} />
-                  {/* <Route path="delivery" element={<Delivery />} /> */}
+                  <Route path="delivery" element={<Delivery />} />
                   {/* <Route path="messages" element={<Messages />} /> */}
                   {/* <Route path="notifications" element={<Notifications />} /> */}
                   {/* <Route path="coupons" element={<Coupons />} /> */}
