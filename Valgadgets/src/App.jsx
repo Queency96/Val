@@ -5,6 +5,7 @@ import ProtectedRoute from './componetnts/admin/components/ProtectedRoute';
 import AdminDashboard from './componetnts/admin/components/AdminDashboard';
 import AdminLogin from './componetnts/admin/components/AdminLogin';
 import AdminProduct from './componetnts/admin/components/Products';
+import Settings from './componetnts/admin/components/Settings';
 import AdminProductCreate from './componetnts/admin/components/AdminProductCreate';
 import QuickViewModal from './componetnts/ui/QuickViewModal';
 import { WishlistProvider } from './context/WishlistContext';
@@ -27,10 +28,11 @@ import MobileBottomNav from './componetnts/layouts/MobileBottomNav';
 import StickyCheckoutBar from './componetnts/sections/StickyCheckoutBar';
 import Orders from './componetnts/admin/components/Orders';
 import Customers from './componetnts/admin/customers/Customers';
-// import Analytics from './componetnts/admin/analytics/Analytics';
-// import Ana from './componetnts/admin/analytics/ana';
 import AnalyticsStarts from './componetnts/admin/analytics/AnalysticsStarts';
 import Delivery from './componetnts/admin/delivery/Delivery';
+import Notifications from './componetnts/admin/notification/Notifications';
+import Messages from './componetnts/admin/messages/Messages';
+import Coupons from './componetnts/admin/coupons/Coupons';
 
 function App() {
   const location = useLocation();
@@ -113,10 +115,10 @@ function App() {
                   <Route path='customers' element={<Customers />} />
                   <Route path='analytics' element={<AnalyticsStarts />} />
                   <Route path="delivery" element={<Delivery />} />
-                  {/* <Route path="messages" element={<Messages />} /> */}
-                  {/* <Route path="notifications" element={<Notifications />} /> */}
-                  {/* <Route path="coupons" element={<Coupons />} /> */}
-                  {/* <Route path="settings" element={<Settings />} /> */}
+                  <Route path="messages" element={<Messages />} />
+                  <Route path="notifications" element={<Notifications />} />
+                  <Route path="coupons" element={<Coupons />} />
+                  <Route path="settings" element={<Settings />} />
                 </Route>
 
                 {/* Other public routes go here */}
